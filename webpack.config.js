@@ -6,6 +6,7 @@ const PATHS = {
 };
 
 module.exports = {
+	devtool: 'inline-source-map',
 	entry: {
 		client: ['babel-polyfill', path.resolve(PATHS.src, 'client.js')]
 	},

@@ -1,6 +1,5 @@
-var test = require('tape');
+import test from 'ava';
 
-test('ImageLoader should fail', function (t) {
-	t.equal(true, true);
-	t.end();
+test('ImageLoader tests', t => {
+	t.deepEqual([1, 2], [1, 2]);
 });
