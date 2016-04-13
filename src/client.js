@@ -7,9 +7,10 @@ import {TILE_WIDTH, TILE_HEIGHT} from './mosaic';
 	const fileDropDOM = document.getElementById('fileDrop');
 	const imageLoader = new ImageLoader({fileSelectDOM, fileDropDOM, window: global});
 	imageLoader.listen()
-		.then(() => {
-			const imageMosaic = new ImageMosaic({TILE_WIDTH, TILE_HEIGHT, window: global});
-			imageMosaic.render();
+		.then(image => {
+			const imageMosaic = new ImageMosaic({TILE_WIDTH, TILE_HEIGHT, image, window: global});
+			const renderMosaicRow = imageMosaic.render();
+			renderMosaicRow.next();
 		})
 		.catch(e => {
 			console.error(e);

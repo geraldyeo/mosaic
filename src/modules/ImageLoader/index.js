@@ -38,7 +38,7 @@ export default class ImageLoader {
 
 		reader.addEventListener('load', () => {
 			previewDOM.src = reader.result;
-			resolve(reader.result);
+			resolve(previewDOM);
 		});
 
 		reader.addEventListener('error', () => {
