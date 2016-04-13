@@ -1,0 +1,7 @@
+{
+	"extends": ["xo"],
+	"env": {
+        "browser": true,
+        "node": true
+    }
+}
