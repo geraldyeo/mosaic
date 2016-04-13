@@ -6,11 +6,16 @@ import {TILE_WIDTH, TILE_HEIGHT} from './mosaic';
 	const fileSelectDOM = document.getElementById('fileSelect');
 	const fileDropDOM = document.getElementById('fileDrop');
 	const imageLoader = new ImageLoader({fileSelectDOM, fileDropDOM, window: global});
+
 	imageLoader.listen()
-		.then(image => {
-			const imageMosaic = new ImageMosaic({TILE_WIDTH, TILE_HEIGHT, image, window: global});
+		.then(imageDOM => {
+			const imageMosaic = new ImageMosaic({TILE_WIDTH, TILE_HEIGHT, image: imageDOM, window: global});
 			const renderMosaicRow = imageMosaic.render();
-			renderMosaicRow.next();
+			let res = renderMosaicRow.next();
+
+			while (!res.done) {
+				res = renderMosaicRow.next();
+			}
 		})
 		.catch(e => {
 			console.error(e);
