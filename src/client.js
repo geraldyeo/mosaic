@@ -10,12 +10,10 @@ import {TILE_WIDTH, TILE_HEIGHT} from './mosaic';
 	imageLoader.listen()
 		.then(imageDOM => {
 			const imageMosaic = new ImageMosaic({TILE_WIDTH, TILE_HEIGHT, image: imageDOM, window: global});
-			const renderMosaicRow = imageMosaic.render();
-			let res = renderMosaicRow.next();
-
-			while (!res.done) {
-				res = renderMosaicRow.next();
-			}
+			return imageMosaic.sample();
+		})
+		.then(tileColors => {
+			console.log(tileColors);
 		})
 		.catch(e => {
 			console.error(e);
