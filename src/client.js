@@ -2,9 +2,35 @@ import ImageLoader from './modules/ImageLoader';
 import ImageMosaic from './modules/ImageMosaic';
 import {TILE_WIDTH, TILE_HEIGHT} from './mosaic';
 
+// http://stackoverflow.com/a/5624139
+function rgbToHex(r, g, b) {
+	return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+function fetchSVGTile(url) {
+	var headers = new Headers();
+	headers.append('Content-Type', 'image/svg+xml');
+	var request = new Request(url, {headers});
+
+	return fetch(request);
+}
+
+function renderRow(results) {
+	const div = document.createElement('div');
+	return Promise.all(results.map(res => res.text()))
+		.then(svgs => {
+			svgs.forEach(svg => {
+				div.innerHTML += svg;
+			});
+			return div;
+		});
+}
+
+// main
 (global => {
 	const fileSelectDOM = document.getElementById('fileSelect');
 	const fileDropDOM = document.getElementById('fileDrop');
+	const mosaicDOM = document.getElementById('mosaic');
 	const imageLoader = new ImageLoader({fileSelectDOM, fileDropDOM, window: global});
 
 	imageLoader.listen()
@@ -12,8 +38,18 @@ import {TILE_WIDTH, TILE_HEIGHT} from './mosaic';
 			const imageMosaic = new ImageMosaic({TILE_WIDTH, TILE_HEIGHT, image: imageDOM, window: global});
 			return imageMosaic.sample();
 		})
-		.then(tileColors => {
-			console.log(tileColors);
+		.then(async samples => {
+			for (let i = 0, len = samples.tileColors.length, chunk = samples.dx; i < len;) {
+				let tmp = samples.tileColors.slice(i, i + chunk);
+				tmp = tmp.map(sample => rgbToHex(sample.r, sample.g, sample.b))
+						.map(hex => fetchSVGTile(`/color/${hex}`));
+
+				await Promise.all(tmp).then(async results => {
+					const row = await renderRow(results);
+					mosaicDOM.appendChild(row);
+					i += chunk;
+				});
+			}
 		})
 		.catch(e => {
 			console.error(e);

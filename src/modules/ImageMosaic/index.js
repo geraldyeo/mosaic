@@ -13,7 +13,7 @@ export default class ImageMosaic {
 		const tw = this.TILE_WIDTH;
 		const th = this.TILE_HEIGHT;
 		const context = this.canvasContext;
-		const {dx, dy} = this.process();
+		const {dx, dy} = this._process();
 		let x = 0;
 		let y = 0;
 		let tileColors = [];
@@ -49,15 +49,15 @@ export default class ImageMosaic {
 
 				if (y < dy) {
 					x = 0;
-					setTimeout(() => _sample(), 0);  // call it async to allow browser UI to update, no setImmediate
+					setTimeout(() => _sample(), 0); // nextTick
 				} else {
-					resolve(tileColors);
+					resolve({tileColors, dx, dy});
 				}
 			})();
 		});
 	}
 
-	process() {
+	_process() {
 		this.canvas.width = this.image.naturalWidth;
 		this.canvas.height = this.image.naturalHeight;
 		this.canvasContext.drawImage(this.image, 0, 0);
@@ -65,6 +65,4 @@ export default class ImageMosaic {
 		const dy = (this.canvas.height / this.TILE_HEIGHT) | 0;
 		return {dx, dy};
 	}
-
-	getAverageColor() {}
 }
