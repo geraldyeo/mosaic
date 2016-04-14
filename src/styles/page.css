@@ -1,0 +1,29 @@
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.app {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 10px;
+	left: 0;
+}
+
+.imageLoader {
+	border: 1px dashed black;
+	width: 400px;
+	height: 300px;
+}
+
+.imageMosaic {
+	display: flex;
+}
+
+.svgs {
+	line-height: 0;
+}
