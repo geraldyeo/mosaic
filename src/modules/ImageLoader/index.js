@@ -1,8 +1,12 @@
 export default class ImageLoader {
-	constructor(options) {
+	constructor(options = {}) {
 		this.window = options.window;
 		this.fileSelectDOM = options.fileSelectDOM;
 		this.fileDropDOM = options.fileDropDOM;
+
+		if (!this.window || !this.fileDropDOM || !this.fileSelectDOM) {
+			throw new Error('Options not complete.');
+		}
 	}
 
 	hasAdvanceSupport() {
