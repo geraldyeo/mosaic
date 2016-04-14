@@ -50,6 +50,7 @@ function ready() {
 	ready().then(() => {
 		imageLoader.listen()
 			.then(imageDOM => {
+				fileDropDOM.classList.add('hidden');
 				const imageMosaic = new ImageMosaic({TILE_WIDTH, TILE_HEIGHT, image: imageDOM, window: global});
 				return imageMosaic.sample();
 			})

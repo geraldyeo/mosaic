@@ -5,6 +5,10 @@ body {
 	padding: 0;
 }
 
+.hidden {
+	display: none !important;
+}
+
 .app {
 	display: flex;
 	flex-direction: column;
@@ -15,9 +19,18 @@ body {
 }
 
 .imageLoader {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border: 1px dashed black;
 	width: 400px;
 	height: 300px;
+}
+
+.fileSelect {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
 }
 
 .imageMosaic {

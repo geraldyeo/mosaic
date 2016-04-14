@@ -7,7 +7,7 @@ export default class ImageLoader {
 
 	hasAdvanceSupport() {
 		var div = this.window.document.createElement('div');
-		return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in this.window && 'FileReader' in this.window;
+		return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FileReader' in this.window;
 	}
 
 	listen() {
