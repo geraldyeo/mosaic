@@ -8,6 +8,7 @@ const PATHS = {
 module.exports = {
 	devtool: 'inline-source-map',
 	resolve: {
+		root: PATHS.src,
 		extensions: ['', '.js']
 	},
 	entry: {
